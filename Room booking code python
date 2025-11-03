@@ -1,0 +1,70 @@
+from datetime import datetime
+
+def hotel_booking():
+    print("🏨 Welcome to Hotel Booking System 🏨\n")
+
+    # Step 1: Enter number of members
+    while True:
+        try:
+            members = int(input("Enter number of members: "))
+            if members <= 0:
+                print("❌ Number of members must be greater than 0.")
+            else:
+                break
+        except ValueError:
+            print("❌ Please enter a valid number.")
+
+    # Step 2: Select room type
+    print("\nRoom Types:\n1. Classic - ₹2000 per night\n2. Deluxe - ₹3500 per night")
+    while True:
+        room_choice = input("Enter room type (Classic/Deluxe): ").strip().lower()
+        if room_choice == "classic":
+            price_per_room = 2000
+            break
+        elif room_choice == "deluxe":
+            price_per_room = 3500
+            break
+        else:
+            print("❌ Invalid room type! Please enter 'Classic' or 'Deluxe'.")
+
+    # Step 3: Enter check-in and check-out date
+    date_format = "%Y-%m-%d"
+    while True:
+        try:
+            check_in = input("Enter Check-in Date (YYYY-MM-DD): ")
+            check_out = input("Enter Check-out Date (YYYY-MM-DD): ")
+            in_date = datetime.strptime(check_in, date_format)
+            out_date = datetime.strptime(check_out, date_format)
+            
+            if out_date <= in_date:
+                print("❌ Check-out date must be after check-in date.")
+            else:
+                total_days = (out_date - in_date).days
+                break
+        except ValueError:
+            print("❌ Invalid date format! Please use YYYY-MM-DD.")
+
+    # Step 4: Enter and validate mobile number
+    while True:
+        mobile = input("Enter Mobile Number: ")
+        if mobile.isdigit() and len(mobile) == 10:
+            break
+        else:
+            print("❌ Invalid mobile number! Please enter a 10-digit number.")
+
+    # Step 5: Calculate total bill
+    total_amount = members * price_per_room * total_days
+
+    # Step 6: Display summary and total bill
+    print("\n📄 Booking Summary:")
+    print(f"Members: {members}")
+    print(f"Room Type: {room_choice.capitalize()}")
+    print(f"Price per Room per Night: ₹{price_per_room}")
+    print(f"Check-in Date: {check_in}")
+    print(f"Check-out Date: {check_out}")
+    print(f"Total Days: {total_days}")
+    print(f"Mobile Number: {mobile}")
+    print(f"\n💰 Total Bill Amount: ₹{total_amount}\n")
+
+# Run the program
+hotel_booking()
